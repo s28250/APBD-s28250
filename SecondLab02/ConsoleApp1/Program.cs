@@ -42,5 +42,6 @@
             Console.WriteLine(avg);
             Console.WriteLine(max);
             Console.WriteLine("lalalalal");
+            Console.WriteLine("feature-new");
         }
  }
