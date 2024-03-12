@@ -21,5 +21,6 @@
             int[] arr = new[] { 1, 23, 4, 2 };
             double avg = CalculateAverage(arr);
             Console.WriteLine(avg);
+            Console.WriteLine("lalalalal");
         }
  }
