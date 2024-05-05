@@ -15,7 +15,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 
     // Manually specify the HTTPS port based on your launchSettings.json
-    app.Urls.Add("https://localhost:7170");
+    app.Urls.Add("https://localhost:7224");
 }
 
 app.UseHttpsRedirection();
