@@ -2,7 +2,7 @@
 
 namespace WebApplication4.Models;
 
-public class Prescription_Medicament
+public class PrescriptionMedicament
 {
     public int IdMedicament { get; set; }
     public int IdPrescription { get; set; }
