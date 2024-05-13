@@ -8,12 +8,14 @@ public class DoctorsService : IDoctorsService
 {
     private readonly IDoctorsRepository _doctorsRepository;
     private readonly IPrescriptionRepository _prescriptionRepository;
+    private readonly IPrescriptionMedicamentRepository _prescriptionMedicamentRepository;
     private IConfiguration _configuration;
-    public DoctorsService(IDoctorsRepository doctorsRepository, IPrescriptionRepository prescriptionRepository, IConfiguration configuration)
+    public DoctorsService(IDoctorsRepository doctorsRepository, IPrescriptionRepository prescriptionRepository,IPrescriptionMedicamentRepository prescriptionMedicamentRepository, IConfiguration configuration)
     {
         _configuration = configuration;
         _prescriptionRepository= prescriptionRepository;
         _doctorsRepository = doctorsRepository;
+        _prescriptionMedicamentRepository = prescriptionMedicamentRepository;
     }
     public IEnumerable<Doctor> GetDoctors()
     {
@@ -33,20 +35,35 @@ public class DoctorsService : IDoctorsService
         using SqlTransaction transaction = connection.BeginTransaction();
         try
         {
+            
             var prescriptions = _prescriptionRepository.GetPrescriptionsByDoctorId(idDoctor);
             if (prescriptions.Any())
             {
                 foreach (var prescription in prescriptions)
                 {
+                    var prescriptionMedicaments =
+                        _prescriptionMedicamentRepository.GetPrescriptionMedicamentByPrescription(prescription
+                            .IdPrescription);
+                    if (prescriptionMedicaments.Any())
+                    {
+                        foreach (var x in prescriptionMedicaments)
+                        {
+                            _prescriptionMedicamentRepository.DeletePrescriptionMedicamentByPrescriptionId(
+                                x.IdPrescription,
+                                transaction);
+                        }
+                    }
+
                     _prescriptionRepository.DeletePrescription(prescription.IdPrescription, transaction);
                 }
             }
+            
             int affectedRows = _doctorsRepository.DeleteDoctor(idDoctor, transaction);
             if (affectedRows == 0)
             {
                 throw new Exception("Doctor not found."); 
             }
-
+  
             transaction.Commit();
             return affectedRows;
         }

@@ -9,6 +9,7 @@ builder.Services.AddScoped<IDoctorsRepository, DoctorsRepository>();
 builder.Services.AddScoped<IDoctorsService, DoctorsService>();
 builder.Services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
 builder.Services.AddScoped<IPrescriptionsService, PrescriptionsService>();
+builder.Services.AddScoped<IPrescriptionMedicamentRepository, PrescriptionMedicamentRepository>();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())

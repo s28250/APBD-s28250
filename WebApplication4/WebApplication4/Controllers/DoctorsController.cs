@@ -33,7 +33,7 @@ public class DoctorsController : ControllerBase
         {
             return NotFound("Doctor with such ID wasn't found");
         }
-
+        
         DoctorWIthPrescription doctorWIthPrescription = new DoctorWIthPrescription
         {
             Doctor = doctor,
