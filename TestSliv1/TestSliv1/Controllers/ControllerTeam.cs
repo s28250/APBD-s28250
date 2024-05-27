@@ -7,17 +7,17 @@ namespace TestSliv1.Controllers;
 
 [Microsoft.AspNetCore.Components.Route("api/[controller]")]
 [ApiController]
-public class Controller : ControllerBase
+public class ControllerTeam : ControllerBase
 {
     private readonly ITeamMemberService _teamMemberService;
     private readonly ITaskService _taskService;
 
-    public Controller(ITeamMemberService teamMemberService, ITaskService taskService)
+    public ControllerTeam(ITeamMemberService teamMemberService, ITaskService taskService)
     {
         _teamMemberService = teamMemberService;
         _taskService = taskService;
     }
-
+/*
     [HttpGet]
     public IActionResult GetTeamMember(int id)
     {
@@ -37,4 +37,6 @@ public class Controller : ControllerBase
         };
         return Ok(teamMemberTasksDto);
     }
+    
+    */
 }
