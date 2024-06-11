@@ -8,9 +8,9 @@ namespace WebApplication5.Controllers;
 [Route("api/[controller]")]
 public class PrescriptionController: ControllerBase
     {
-        private readonly ApbdContext _context;
+        private readonly PrescriptionDbContext _context;
 
-        public PrescriptionController(ApbdContext context)
+        public PrescriptionController(PrescriptionDbContext context)
         {
             _context = context;
         }

@@ -10,7 +10,7 @@ using WebApplication5.Context;
 
 namespace WebApplication5.Migrations
 {
-    [DbContext(typeof(ApbdContext))]
+    [DbContext(typeof(PrescriptionDbContext))]
     [Migration("20240603202305_AddedDoctors")]
     partial class AddedDoctors
     {

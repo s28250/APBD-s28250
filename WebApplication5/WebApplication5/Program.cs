@@ -1,32 +1,77 @@
-using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using WebApplication5.Context;
+using WebApplication5.Middlewares;
 
-namespace WebApplication5;
-public class Program
+var builder = WebApplication.CreateBuilder(args);
+
+void ConfigureServices(IServiceCollection services)
 {
-    public static void Main(string[] args)
+    services.AddAuthentication(options =>
     {
-        var builder = WebApplication.CreateBuilder(args);
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-        builder.Services.AddControllers().AddJsonOptions(x =>
-            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-        builder.Services.AddDbContext<ApbdContext>(opt =>
-            opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-        var app = builder.Build();
-        if (app.Environment.IsDevelopment())
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    }).AddJwtBearer(opt =>
+    {
+        opt.TokenValidationParameters = new TokenValidationParameters
         {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-        app.MapControllers();
-
-        app.Run();
-    }
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = false,
+            ClockSkew = TimeSpan.Zero,
+            ValidIssuer = "https://localhost:5001",
+            ValidAudience = "https://localhost:5001",
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        };
+    });
 }
+
+// Add services to the container.
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+// Configure DbContext with SQL Server
+builder.Services.AddDbContext<PrescriptionDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+//Adding middleware
+app.UseMiddleware<LoggingMiddleware>();
+
+app.Use(async (context, next) =>
+{
+    if (!context.Request.Headers.ContainsKey("UserName"))
+    {
+        context.Response.StatusCode = Microsoft.AspNetCore.Http.StatusCodes.Status401Unauthorized;
+        await context.Response.WriteAsync("Login and password were not given");
+        return;
+    }
+    else
+    {
+        // check within db whether exists (SqlConnection)
+        string user = context.Response.Headers["UserName"].ToString();
+        //...
+    }
+    await next();
+});
+
+app.UseHttpsRedirection();
+
+app.UseAuthentication();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();

@@ -14,3 +14,16 @@ public class Medicament
     public string Type { get; set; }
     public ICollection<Prescription_Medicament> Prescription_Medicaments { get; set; }
 }
+public class MedicamentDTO
+{
+    public int IdMedicament { get; set; }
+    public int Dose { get; set; }
+    public string Description { get; set; }
+}
+public class MedicamentDtoResponse
+{
+    public int IdMedicament { get; set; }
+    public string Name { get; set; }
+    public int Dose { get; set; }
+    public string Description { get; set; }
+}

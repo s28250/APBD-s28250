@@ -11,7 +11,7 @@ using WebApplication5.Context;
 
 namespace WebApplication5.Migrations
 {
-    [DbContext(typeof(ApbdContext))]
+    [DbContext(typeof(PrescriptionDbContext))]
     [Migration("20240603204143_AddedAll")]
     partial class AddedAll
     {

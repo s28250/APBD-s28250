@@ -10,7 +10,7 @@ using WebApplication5.Context;
 
 namespace WebApplication5.Migrations
 {
-    [DbContext(typeof(ApbdContext))]
+    [DbContext(typeof(PrescriptionDbContext))]
     partial class ApbdContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

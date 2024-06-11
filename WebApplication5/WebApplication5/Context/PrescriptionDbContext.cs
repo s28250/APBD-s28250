@@ -3,14 +3,14 @@ using WebApplication5.Models;
 
 namespace WebApplication5.Context;
 
-public  class ApbdContext : DbContext
+public  class PrescriptionDbContext : DbContext
 {
-    public ApbdContext()
+    public PrescriptionDbContext()
     {
         
     }
 
-    public ApbdContext(DbContextOptions<ApbdContext> options)
+    public PrescriptionDbContext(DbContextOptions<PrescriptionDbContext> options)
         : base(options)
     {
     }

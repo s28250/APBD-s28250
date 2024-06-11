@@ -18,3 +18,9 @@ public class Doctor
     public string Email { get; set; }
     public ICollection<Prescription> Prescriptions { get; set; }
 }
+public class DoctorDtoResponse
+{
+    public int IdDoctor { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+}

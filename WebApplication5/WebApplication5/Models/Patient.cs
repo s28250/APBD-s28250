@@ -16,3 +16,18 @@ public class Patient
     public DateTime BirthDate { get; set; }
     public ICollection<Prescription> Prescriptions { get; set; }
 }
+public class PatientDTO
+{
+    public int IdPatient { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public DateTime BirthDate { get; set; }
+}
+public class PatientDtoResponse
+{
+    public int IdPatient { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public DateTime BirthDate { get; set; }
+    public List<PrescriptionDtoResponse> Prescriptions { get; set; }
+}
