@@ -30,21 +30,3 @@ public class Program
         app.Run();
     }
 }
-/*
- * dotnet add package Microsoft.AspNetCore.Mvc.NewtonsoftJson
-dotnet add package Microsoft.EntityFrameworkCore
-dotnet add package Microsoft.EntityFrameworkCore.SqlServer
-dotnet add package Microsoft.EntityFrameworkCore.Tools
-
-
-dotnet ef migrations add ...
-
-dotnet ef migrations remove
-
-dotnet ef database update 
-
-dotnet ef database update 0
-
-C:\Users\s28250\.dotnet\tools\dotnet-ef migrations add All
-
-*/

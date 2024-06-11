@@ -24,6 +24,7 @@ public class LocalDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        /*
         modelBuilder.Entity<Sailboat_Reservation>(entity =>
         {
             entity.HasKey(sr => new { sr.IdReservation, sr.IdSailboat });
@@ -36,5 +37,6 @@ public class LocalDbContext : DbContext
                 .HasForeignKey(sr => sr.IdSailboat)
                 .OnDelete(DeleteBehavior.Restrict);
         });
+        */
     }
 }
